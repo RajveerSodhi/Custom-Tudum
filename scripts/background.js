@@ -25,7 +25,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (changeInfo.status === "complete" && tab.url && tab.url.includes("netflix.com/watch/")) {
         // Retrieve the duration of the custom Tudum sound from storage
         chrome.storage.local.get("tudumSoundDuration", function (result) {
-            let duration = result.tudumSoundDuration || 3000; // Default to 3 seconds if not set
+            let duration = (8 - result.tudumSoundDuration) || 3000; // Default to 3 seconds if not set
             muteTudum(tabId, duration);
         });
     }
