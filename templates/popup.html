@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Custom Tudum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+
+        #confirmation {
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Upload Your Tudum Sound</h2>
+    <label for="fileInput">Choose a sound file:</label>
+    <input type="file" id="fileInput" accept="audio/*">
+    <button id="saveButton">Save Sound</button>
+    <div id="confirmation">Tudum sound has been updated!</div>
+    <script src="../scripts/popup.js"></script>
+</body>
+
+</html>
