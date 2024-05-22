@@ -14,7 +14,8 @@
             ],
             "matches": [
                 "*://www.netflix.com/watch/*"
-            ]
+            ],
+            "run_at": "document_end"
         }
     ],
     "background": {
@@ -29,6 +30,10 @@
     "permissions": [
         "storage",
         "activeTab",
-        "scripting"
+        "scripting",
+        "tabs"
+    ],
+    "host_permissions": [
+        "*://*.netflix.com/*"
     ]
 }
