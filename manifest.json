@@ -7,17 +7,6 @@
         "default_popup": "templates/popup.html",
         "default_icon": "images/logo.png"
     },
-    "content_scripts": [
-        {
-            "js": [
-                "scripts/content.js"
-            ],
-            "matches": [
-                "*://www.netflix.com/watch/*"
-            ],
-            "run_at": "document_end"
-        }
-    ],
     "background": {
         "service_worker": "scripts/background.js"
     },
@@ -30,10 +19,9 @@
     "permissions": [
         "storage",
         "activeTab",
-        "scripting",
-        "tabs"
+        "scripting"
     ],
     "host_permissions": [
-        "*://*.netflix.com/*"
+        "https://www.netflix.com/watch/*"
     ]
 }
