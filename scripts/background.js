@@ -66,7 +66,11 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
             }, () => {
                 console.log("Content script injected successfully");
             })
-            // chrome.tabs.update(tabId, { muted: false });
+            // unmute tab after 8 seconds
+            setTimeout(() => {
+                chrome.tabs.update(tabId, { muted: false });
+            }, 8000);
+
         }
     }
 });
