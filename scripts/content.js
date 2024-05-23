@@ -62,7 +62,12 @@ function checkForVideoElement() {
     var video = document.querySelector("video");
     if (video) {
         console.log(video);
-        document.body.innerHTML = "<h1>Video found</h1>";
+
+        if (video.currentTime <= 60) {
+            document.body.innerHTML = "<h1>Video found less than 60s</h1>";
+        }
+
+        // document.body.innerHTML = "<h1>Video found</h1>";
         return true;
     }
     return false;
