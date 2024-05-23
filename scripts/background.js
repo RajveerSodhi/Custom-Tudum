@@ -66,10 +66,15 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
             }, () => {
                 console.log("Content script injected successfully");
             })
-            // unmute tab after 8 seconds
-            setTimeout(() => {
-                chrome.tabs.update(tabId, { muted: false });
-            }, 8000);
+
+            // keep  the tab muted until the custom Tudum sound has played + remainder of 8 seconds
+            chrome.storage.local.get("customTudumDuration", function (result) {
+                let duration = result.customTudumDuration || 0;
+                console.log("Duration of the custom Tudum sound: " + duration + "ms");
+                setTimeout(() => {
+                    chrome.tabs.update(tabId, { muted: false });
+                }, (8000 - duration));
+            });
 
         }
     }
