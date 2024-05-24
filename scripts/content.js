@@ -24,15 +24,8 @@ function checkForVideoElement() {
 
         if (video.currentTime <= 60) {
             console.log("Video found less than 60s");
+            // asking background.js to create an offscreen document and play the sound
             chrome.runtime.sendMessage("runOffscreenTask");
-            // creating offscreen document to play the custom sound
-            // chrome.offscreen.createDocument({
-            //     url: chrome.runtime.getURL("offscreen.html"),
-            //     reasons: ["AUDIO_PLAYBACK"],
-            //     justification: "Playing Custom Sound"
-            // }, () => {
-            //     chrome.runtime.sendMessage("playCustomSound");
-            // });
         }
 
         return true;
