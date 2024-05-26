@@ -1,14 +1,3 @@
-// Fix for crbug.com/1185241
-if (typeof chrome.runtime.onMessage !== "undefined") {
-    const { onMessage } = chrome.runtime;
-    const { addListener } = onMessage;
-    onMessage.addListener = fn => addListener.call(onMessage, (msg, sender, respond) => {
-        const res = fn(msg, sender, respond);
-        if (res instanceof Promise) return !!res.then(respond, console.error);
-        if (res !== undefined) respond(res);
-    });
-}
-
 // Re-inject content scripts on extension install/update
 chrome.runtime.onInstalled.addListener(async () => {
     const contentScripts = chrome.runtime.getManifest().content_scripts;
@@ -49,6 +38,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
 // Message listener for offscreen task
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message === "runOffscreenTask") {
+        console.log("Received message to run offscreen task");
         offScreenTask();
         return true;
     }
@@ -56,31 +46,34 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function offScreenTask() {
     await setupOffscreenDocument('offscreen.html');
-    chrome.runtime.sendMessage("playSound");
+    chrome.runtime.sendMessage({ sound: await getSound() });
     return true;
 }
 
-let creating; // A global promise to avoid concurrency issues
 async function setupOffscreenDocument() {
-    const offscreenUrl = chrome.runtime.getURL("offscreen.html");
-    const existingContexts = await chrome.runtime.getContexts({
-        contextTypes: ['OFFSCREEN_DOCUMENT'],
-        documentUrls: [offscreenUrl]
-    });
-
-    if (existingContexts.length > 0) {
-        return;
-    }
-
-    if (creating) {
-        await creating;
-    } else {
-        creating = chrome.offscreen.createDocument({
-            url: offscreenUrl,
+    try {
+        await chrome.offscreen.createDocument({
+            url: chrome.runtime.getURL('offscreen.html'),
             reasons: ["AUDIO_PLAYBACK"],
             justification: "Playing Custom Sound",
         });
-        await creating;
-        creating = null;
+    } catch (error) {
+        if (!error.message.startsWith('Only a single offscreen'))
+            throw error;
     }
+}
+
+async function getSound() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("Sound", function (result) {
+            let audio = result.Sound;
+            if (audio) {
+                console.log("Audio found");
+                resolve(audio);
+            } else {
+                console.log("Audio not found");
+                reject("Audio not found");
+            }
+        });
+    });
 }
