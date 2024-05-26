@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 });
 
 async function offScreenTask() {
-    await setupOffscreenDocument('offscreen.html');
+    await setupOffscreenDocument();
     chrome.runtime.sendMessage({ sound: await getSound() });
     return true;
 }
@@ -53,7 +53,7 @@ async function offScreenTask() {
 async function setupOffscreenDocument() {
     try {
         await chrome.offscreen.createDocument({
-            url: chrome.runtime.getURL('offscreen.html'),
+            url: chrome.runtime.getURL('../templates/offscreen.html'),
             reasons: ["AUDIO_PLAYBACK"],
             justification: "Playing Custom Sound",
         });

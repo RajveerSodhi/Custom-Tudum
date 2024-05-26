@@ -1,9 +1,9 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Offscreen script received message:", message);
 
-    if (sound in message) {
-        console.log("Playing sound:", sound);
-        playSound(sound);
+    if (message.sound) {
+        console.log("Playing sound:", message.sound);
+        playSound(message.sound);
     }
 });
 
