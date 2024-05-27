@@ -20,11 +20,16 @@
         "storage",
         "activeTab",
         "scripting",
-        "webNavigation",
         "offscreen"
     ],
     "host_permissions": [
         "https://www.netflix.com/watch/*"
+    ],
+    "offscreen_documents": [
+        {
+            "matches": ["*://*/*"],
+            "url": "templates/offscreen.html"
+        }
     ],
     "content_scripts": [
         {
