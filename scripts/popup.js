@@ -1,27 +1,48 @@
-document.getElementById("fileInput").addEventListener("change", function (event) {
-    const file = event.target.files[0];
+document.addEventListener("DOMContentLoaded", function() {
+    chrome.storage.local.get(["Tudum", "TudumName", "TudumVolume"], function(result) {
+        if (result.TudumName) {
+            document.getElementById("current-sound-name").textContent = result.TudumName;
+        }
+        if (result.TudumVolume) {
+            document.getElementById("myRange").value = result.TudumVolume;
+            document.getElementById("volume-value").textContent = result.TudumVolume;
+        }
+    });
+});
+
+document.getElementById("saveButton").addEventListener("click", function() {
+    const fileInput = document.getElementById("fileInput");
+    const file = fileInput.files[0];
+
     if (file && file.type.startsWith("audio/")) {
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function(e) {
             const audioData = e.target.result;
             const audio = new Audio(audioData);
-            audio.onloadedmetadata = function () {
+            audio.onloadedmetadata = function() {
                 if (audio.duration <= 5) { // Ensure the custom tudum is less than or equal to 5 seconds
-                    document.getElementById("saveButton").disabled = false;
-                    document.getElementById("saveButton").onclick = function () {
-                        chrome.storage.local.set({
-                            Tudum: audioData
-                        }, function () {
-                            document.getElementById("confirmation").style.display = "block";
-                        });
-                    };
+                    const volume = document.getElementById("myRange").value;
+                    chrome.storage.local.set({
+                        Tudum: audioData,
+                        TudumName: file.name,
+                        TudumVolume: volume
+                    }, function() {
+                        document.getElementById("confirmation").style.display = "block";
+                        document.getElementById("current-sound-name").textContent = file.name;
+                    });
                 } else {
-                    alert("Please upload an audio file that is 5 seconds or less.");
+                    document.getElementById("error-long").style.display = "block";
                 }
             };
         };
         reader.readAsDataURL(file);
     } else {
-        alert("Please upload a valid audio file.");
+        document.getElementById("error-invalid").style.display = "block";
     }
+});
+
+document.getElementById("myRange").addEventListener("input", function(event) {
+    const volume = event.target.value;
+    document.getElementById("volume-value").textContent = volume;
+    chrome.storage.local.set({ TudumVolume: volume });
 });

@@ -40,8 +40,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function offScreenTask() {
     await setupOffscreenDocument();
-    chrome.runtime.sendMessage({ tudum: await getTudum() });
+    chrome.runtime.sendMessage({ tudum: await getTudum(), volume: await getVolume() });
     return true;
+}
+
+async function getVolume() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get("TudumVolume", function (result) {
+            let volume = result.TudumVolume;
+            if (volume) {
+                console.log("volume found");
+                resolve(volume);
+            } else {
+                console.log("volume not found");
+                reject("volume not found");
+            }
+        });
+    });
 }
 
 async function setupOffscreenDocument() {

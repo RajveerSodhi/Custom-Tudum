@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Custom Tudum</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 10px;
-        }
-
-        #confirmation {
-            color: green;
-            margin-top: 10px;
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../styles/popup.css">
 </head>
-
 <body>
-    <h2>Upload Your Tudum Sound</h2>
-    <label for="fileInput">Choose an audio file:</label>
-    <input type="file" id="fileInput" accept="audio/*">
-    <button id="saveButton">Save Custom Tudum</button>
-    <div id="confirmation">Tudum sound has been updated!</div>
+    <h1>Custom Tudum</h1>
+
+    <div id="current-sound">Currently set: <span id="current-sound-name">None</span></div>
+
+    <div id="change-sound">
+        <label for="fileInput">Choose an audio file:</label>
+        <input type="file" id="fileInput" accept="audio/*">
+        <p><em>Make sure the length of the file is less than 5s</em></p>
+        <button id="saveButton" disabled>Save Custom Tudum</button>
+        <div id="confirmation">Tudum sound has been updated!</div>
+        <div id="error-long">Error: File is too long</div>
+        <div id="error-invalid">Error: Invalid file type</div>
+    </div>
+    
+    <div class="slidecontainer">
+        <label for="myRange">Volume:</label>
+        <div>
+            <span id="volume-value">50</span>
+            <input type="range" min="1" max="100" value="80" class="slider" id="myRange">
+        </div>
+    </div>
+
+    <div id="contact-me">
+        <a href="mailto:rajveersodhi03@gmail.com">Contact Me</a>
+    </div>
+
     <script src="../scripts/popup.js"></script>
 </body>
-
 </html>

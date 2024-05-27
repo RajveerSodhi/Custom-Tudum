@@ -1,4 +1,124 @@
 body {
     font-family: Arial, sans-serif;
-    padding: 10px;
+    padding: 0 20px 20px 20px;
+    background-color: #141414;
+    color: #E5E5E5;
+    margin: 0;
+}
+
+h1 {
+    color: #E50914;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+input[type="file"] {
+    display: block;
+    margin-bottom: 10px;
+}
+
+#change-sound {
+    text-align: center;
+    border: 2px solid #AAA;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+}
+
+button {
+    background-color: #E50914;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 6px;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+#confirmation {
+    color: #00C853;
+    margin-top: 10px;
+    display: none;
+}
+
+#error-long, #error-invalid {
+    color: #FF5252;
+    margin-top: 10px;
+    display: none;
+}
+
+.slidecontainer {
+    margin-top: 20px;
+    width: 100%;
+    align-items: center;
+}
+
+#volume-value {
+    font-size: 0.85rem;
+}
+
+.slider {
+    width: 90%;
+    margin-left: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 10px;
+    background: #555;
+    outline: none;
+    opacity: 0.7;
+    border-radius: 5px;
+    transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #E50914;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #E50914;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#current-sound {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#contact-me {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+#contact-me a {
+    color: #E50914;
+    text-decoration: none;
+}
+
+#contact-me a:hover {
+    text-decoration: underline;
 }

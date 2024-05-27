@@ -3,17 +3,18 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if (message.tudum) {
         console.log("Playing tudum:", message.tudum);
-        playTudum(message.tudum);
+        playTudum(message.tudum, message.volume);
     }
 });
 
-function playTudum(audio) {
+function playTudum(audio, volume) {
     // Convert the data URI to a Blob
     fetch(audio)
         .then(response => response.blob())
         .then(blob => {
             const audioUrl = URL.createObjectURL(blob);
             const audioElement = new Audio(audioUrl);
+            audioElement.volume = volume;
             audioElement.play().then(() => {
                 console.log("Audio played successfully");
             }).catch(error => {
