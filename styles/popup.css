@@ -22,6 +22,11 @@ label {
 input[type="file"] {
     display: block;
     margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border: solid 1px #AAA;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 #change-sound {
@@ -47,6 +52,10 @@ input[type="file"] {
 #saveButton:disabled {
     background-color: #555;
     cursor: not-allowed;
+}
+
+#saveButton:not(:disabled):hover {
+    background-color: #ac070f;
 }
 
 #confirmation {
@@ -106,6 +115,9 @@ input[type="file"] {
     font-size: 1.2rem;
     text-align: center;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #contact-me {
@@ -124,14 +136,22 @@ input[type="file"] {
 }
 
 #testAudioButton {
-    background: none;
+    background-color: #E50914;
+    width: 26px;
+    height: 26px;
+    color: #FFF;
     border-radius: 50%;
     border: none;
     cursor: pointer;
     margin-left: 10px;
+    padding-right: 4px;
 }
 
 #testAudioButton:disabled {
     background-color: #555;
     cursor: not-allowed;
+}
+
+#testAudioButton:not(:disabled):hover {
+    background-color: #ac070f;
 }
