@@ -50,7 +50,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 async function offScreenTask() {
     await setupOffscreenDocument();
-    chrome.runtime.sendMessage({ sound: await getSound() });
+    chrome.runtime.sendMessage({ tudum: await getTudum() });
     return true;
 }
 
@@ -59,7 +59,7 @@ async function setupOffscreenDocument() {
         await chrome.offscreen.createDocument({
             url: chrome.runtime.getURL('../templates/offscreen.html'),
             reasons: ["AUDIO_PLAYBACK"],
-            justification: "Playing Custom Sound",
+            justification: "Playing Custom Tudum",
         });
     } catch (error) {
         if (!error.message.startsWith('Only a single offscreen'))
@@ -67,10 +67,10 @@ async function setupOffscreenDocument() {
     }
 }
 
-async function getSound() {
+async function getTudum() {
     return new Promise((resolve, reject) => {
-        chrome.storage.local.get("Sound", function (result) {
-            let audio = result.Sound;
+        chrome.storage.local.get("Tudum", function (result) {
+            let audio = result.Tudum;
             if (audio) {
                 console.log("Audio found");
                 resolve(audio);

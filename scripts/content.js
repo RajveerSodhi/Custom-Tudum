@@ -1,3 +1,6 @@
+// variable to control repetitive playing of custom tudum
+let tudumPlayed = false;
+
 // Try to find the video element immediately
 if (!checkForVideoElement()) {
     // If not found, use a mutation observer to watch for changes
@@ -20,23 +23,46 @@ if (!checkForVideoElement()) {
 function checkForVideoElement() {
     var video = document.querySelector("video");
     if (video) {
-        console.log("video found");
-        if (isMainVideo && isVideoBeginning(video)) {
-            // asking background.js to create an offscreen document and play the sound
+        // apply the event listener only once
+        if (!video.hasAttribute('data-checked')) {
+            video.setAttribute('data-checked', 'true');
+            // add event listener to the video element to check if the video is at the beginning
+            video.addEventListener('timeupdate', function () {
+                if (injectTudum(video)) {
+                    toggleTudumPlayed();
+                    chrome.runtime.sendMessage("runOffscreenTask");
+                }
+            });
+        return true;
+        }
+        // check if the video is at the beginning once independently of the event listener
+        if (injectTudum(video)) {
+            toggleTudumPlayed();
             chrome.runtime.sendMessage("runOffscreenTask");
         }
-
-        return true;
-    }
     return false;
+    }
 }
 
 // checks if the video is at the beginning
 function isVideoBeginning(video) {
-    return video.currentTime <= 20
+    return video.currentTime <= 1
 }
 
 // checks if the video is the main video or an ad (<30s)
 function isMainVideo(video) {
     return video.duration > 30
+}
+
+// set tudumPlayed to true and then back to false after 3 seconds
+async function toggleTudumPlayed() {
+    tudumPlayed = true;
+    await setTimeout(() => {
+        tudumPlayed = false;
+    }, 3000);
+}
+
+// inject the custom tudum if the video is the main video and at the beginning and the sound has not been played yet
+function injectTudum(video) {
+    return isMainVideo(video) && isVideoBeginning(video) && !tudumPlayed
 }

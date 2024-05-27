@@ -1,13 +1,13 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log("Offscreen script received message:", message);
 
-    if (message.sound) {
-        console.log("Playing sound:", message.sound);
-        playSound(message.sound);
+    if (message.tudum) {
+        console.log("Playing tudum:", message.tudum);
+        playTudum(message.tudum);
     }
 });
 
-function playSound(audio) {
+function playTudum(audio) {
     // Convert the data URI to a Blob
     fetch(audio)
         .then(response => response.blob())
