@@ -20,6 +20,7 @@
         "storage",
         "activeTab",
         "scripting",
+        "webNavigation",
         "offscreen"
     ],
     "host_permissions": [

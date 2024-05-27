@@ -33,7 +33,7 @@ function checkForVideoElement() {
 
 // checks if the video is at the beginning
 function isVideoBeginning(video) {
-    return video.currentTime <= 2
+    return video.currentTime <= 20
 }
 
 // checks if the video is the main video or an ad (<30s)
