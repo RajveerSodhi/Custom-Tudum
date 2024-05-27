@@ -28,17 +28,15 @@ function checkForVideoElement() {
             video.setAttribute('data-checked', 'true');
             // add event listener to the video element to check if the video is at the beginning
             video.addEventListener('timeupdate', function () {
-                if (injectTudum(video)) {
-                    toggleTudumPlayed();
-                    chrome.runtime.sendMessage("runOffscreenTask");
+                if (isInjectTudum(video)) {
+                    injectTudum(video)
                 }
             });
         return true;
         }
         // check if the video is at the beginning once independently of the event listener
-        if (injectTudum(video)) {
-            toggleTudumPlayed();
-            chrome.runtime.sendMessage("runOffscreenTask");
+        if (isInjectTudum(video)) {
+            injectTudum(video)
         }
     return false;
     }
@@ -63,6 +61,21 @@ async function toggleTudumPlayed() {
 }
 
 // inject the custom tudum if the video is the main video and at the beginning and the sound has not been played yet
-function injectTudum(video) {
+function isInjectTudum(video) {
     return isMainVideo(video) && isVideoBeginning(video) && !tudumPlayed
+}
+
+// inject the custom tudum
+function injectTudum(video) {
+    muteVideo(video)
+    toggleTudumPlayed();
+    chrome.runtime.sendMessage("runOffscreenTask");
+}
+
+// mute video for 5 seconds
+async function muteVideo(video) {
+    video.muted = true;
+    await setTimeout(() => {
+        video.muted = false;
+    }, 5000);
 }

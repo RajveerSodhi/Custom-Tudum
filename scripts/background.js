@@ -16,7 +16,6 @@ chrome.runtime.onInstalled.addListener(async () => {
 // Tab update listener
 chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
     if (info.status === "complete" && tab.url.indexOf("netflix.com/watch/") !== -1) {
-        muteAudio(tabId);
         injectContentScript(tabId);
     }
 });
@@ -28,15 +27,6 @@ function injectContentScript(tabId) {
     }, () => {
         console.log("Content script injected successfully");
     });
-}
-
-async function muteAudio(tabId) {
-    chrome.tabs.update(tabId, { muted: true })
-    console.log("Tab muted");
-    await setTimeout(() => {
-        chrome.tabs.update(tabId, { muted: false })
-        console.log("Tab unmuted");
-    }, 5000);
 }
 
 // Message listener for offscreen task
