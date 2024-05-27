@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     chrome.storage.local.get(["Tudum", "TudumName", "TudumVolume"], function(result) {
         if (result.TudumName) {
             document.getElementById("current-sound-name").textContent = result.TudumName;
+            document.getElementById("testAudioButton").disabled = false;
         }
         if (result.TudumVolume) {
             document.getElementById("myRange").value = result.TudumVolume;
@@ -33,6 +34,7 @@ document.getElementById("saveButton").addEventListener("click", function() {
                     }, function() {
                         document.getElementById("confirmation").style.display = "block";
                         document.getElementById("current-sound-name").textContent = file.name;
+                        document.getElementById("testAudioButton").disabled = false;
                     });
                 } else {
                     document.getElementById("error-long").style.display = "block";
@@ -49,4 +51,14 @@ document.getElementById("myRange").addEventListener("input", function(event) {
     const volume = event.target.value;
     document.getElementById("volume-value").textContent = volume;
     chrome.storage.local.set({ TudumVolume: volume });
+});
+
+document.getElementById("testAudioButton").addEventListener("click", function() {
+    chrome.storage.local.get(["Tudum", "TudumVolume"], function(result) {
+        if (result.Tudum) {
+            const audio = new Audio(result.Tudum);
+            audio.volume = result.TudumVolume / 100; // Adjust volume based on stored value
+            audio.play();
+        }
+    });
 });

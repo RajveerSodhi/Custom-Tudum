@@ -34,7 +34,7 @@ input[type="file"] {
     min-width: 300px;
 }
 
-button {
+#saveButton {
     background-color: #E50914;
     color: #ffffff;
     border: none;
@@ -44,7 +44,7 @@ button {
     border-radius: 6px;
 }
 
-button:disabled {
+#saveButton:disabled {
     background-color: #555;
     cursor: not-allowed;
 }
@@ -121,4 +121,17 @@ button:disabled {
 
 #contact-me a:hover {
     text-decoration: underline;
+}
+
+#testAudioButton {
+    background: none;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#testAudioButton:disabled {
+    background-color: #555;
+    cursor: not-allowed;
 }

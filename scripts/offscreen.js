@@ -14,7 +14,7 @@ function playTudum(audio, volume) {
         .then(blob => {
             const audioUrl = URL.createObjectURL(blob);
             const audioElement = new Audio(audioUrl);
-            audioElement.volume = volume;
+            audioElement.volume = volume / 100.0;
             audioElement.play().then(() => {
                 console.log("Audio played successfully");
             }).catch(error => {
