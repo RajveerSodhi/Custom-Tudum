@@ -21,7 +21,6 @@ function checkForVideoElement() {
     var video = document.querySelector("video");
     if (video) {
         console.log("video found");
-
         if (isMainVideo && isVideoBeginning(video)) {
             // asking background.js to create an offscreen document and play the sound
             chrome.runtime.sendMessage("runOffscreenTask");

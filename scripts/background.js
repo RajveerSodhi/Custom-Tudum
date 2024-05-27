@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(async () => {
 // Tab update listener
 chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
     if (info.status === "complete" && tab.url.indexOf("netflix.com/watch/") !== -1) {
-        chrome.tabs.update(tabId, { muted: true });
+        muteAudio(tabId);
 
         chrome.scripting.executeScript({
             target: { tabId: tabId },
@@ -24,16 +24,15 @@ chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
         }, () => {
             console.log("Content script injected successfully");
         });
-
-        chrome.storage.local.get("soundDuration", function (result) {
-            let duration = result.soundDuration || 0;
-            console.log("Duration of the sound: " + duration + "ms");
-            setTimeout(() => {
-                chrome.tabs.update(tabId, { muted: false });
-            }, (8000 - duration));
-        });
     }
 });
+
+async function muteAudio(tabId) {
+    chrome.tabs.update(tabId, { muted: true });
+    await setTimeout(() => {
+        chrome.tabs.update(tabId, { muted: false });
+    }, (5000));
+}
 
 // Message listener for offscreen task
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {

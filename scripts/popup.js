@@ -10,8 +10,7 @@ document.getElementById("fileInput").addEventListener("change", function (event)
                     document.getElementById("saveButton").disabled = false;
                     document.getElementById("saveButton").onclick = function () {
                         chrome.storage.local.set({
-                            Sound: audioData,
-                            soundDuration: audio.duration * 1000 // Store duration in milliseconds
+                            Sound: audioData
                         }, function () {
                             document.getElementById("confirmation").style.display = "block";
                         });
