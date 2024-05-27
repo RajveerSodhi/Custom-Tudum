@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+document.getElementById("fileInput").addEventListener("change", function() {
+    document.getElementById("saveButton").disabled = false;
+});
+
 document.getElementById("saveButton").addEventListener("click", function() {
     const fileInput = document.getElementById("fileInput");
     const file = fileInput.files[0];
