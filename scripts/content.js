@@ -60,9 +60,13 @@ async function toggleTudumPlayed() {
     }, 3000);
 }
 
-// inject the custom tudum if the video is the main video and at the beginning and the sound has not been played yet
+// inject the custom tudum if the video is the main video and at the beginning and the sound has not been played yet and the OriginalFlix API returns true
 function isInjectTudum(video) {
-    return isMainVideo(video) && isVideoBeginning(video) && !tudumPlayed
+    if (isVideoBeginning(video)) {
+        return isMainVideo(video) && isOriginal() && !tudumPlayed
+    }
+
+    return false
 }
 
 // inject the custom tudum
@@ -78,4 +82,39 @@ async function muteVideo(video) {
     await setTimeout(() => {
         video.muted = false;
     }, 5000);
+}
+
+function isOriginal() {
+    const title = getTitle()
+    const isTitleOriginal = fetchOringinalFlix(title)
+    return isTitleOriginal
+}
+
+async function fetchOringinalFlix(title) {
+    const response = await fetch(`https://api.originalflix.dev/is-original?title=${encodeURIComponent(title)}&service=Netflix`)
+    const data = await response.json();
+
+    return data.exists
+}
+
+function getTitle() {
+    const container = document.querySelector('.medium.ltr-m1ta4i'); 
+    
+    if (!container) {
+        console.warn("No container element found");
+        return null;
+    }
+
+    const heading = container.querySelector('h4');
+    if (!heading) {
+        console.warn("No h4 found inside container");
+        return null;
+    }
+    
+    let title = heading.textContent.trim(); 
+    if (title.endsWith(':')) {
+        title = title.slice(0, -1).trim();
+    }
+    
+    return title;
 }
