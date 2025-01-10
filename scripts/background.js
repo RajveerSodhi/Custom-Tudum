@@ -1,33 +1,33 @@
-// Re-inject content scripts on extension install/update
-chrome.runtime.onInstalled.addListener(async () => {
-    const contentScripts = chrome.runtime.getManifest().content_scripts;
-    for (const cs of contentScripts) {
-        const tabs = await chrome.tabs.query({ url: cs.matches });
-        for (const tab of tabs) {
-            chrome.scripting.executeScript({
-                target: { tabId: tab.id, allFrames: cs.all_frames },
-                files: cs.js,
-                injectImmediately: cs.run_at === 'document_start',
-            });
-        }
-    }
-});
+// // Re-inject content scripts on extension install/update
+// chrome.runtime.onInstalled.addListener(async () => {
+//     const contentScripts = chrome.runtime.getManifest().content_scripts;
+//     for (const cs of contentScripts) {
+//         const tabs = await chrome.tabs.query({ url: cs.matches });
+//         for (const tab of tabs) {
+//             chrome.scripting.executeScript({
+//                 target: { tabId: tab.id, allFrames: cs.all_frames },
+//                 files: cs.js,
+//                 injectImmediately: cs.run_at === 'document_start',
+//             });
+//         }
+//     }
+// });
 
-// Tab update listener
-chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
-    if (info.status === "complete" && tab.url.indexOf("netflix.com/watch/") !== -1) {
-        injectContentScript(tabId);
-    }
-});
+// // Tab update listener
+// chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
+//     if (info.status === "complete" && tab.url.indexOf("netflix.com/watch/") !== -1) {
+//         injectContentScript(tabId);
+//     }
+// });
 
-function injectContentScript(tabId) {
-    chrome.scripting.executeScript({
-        target: { tabId: tabId },
-        files: ['scripts/content.js']
-    }, () => {
-        console.log("Content script injected successfully");
-    });
-}
+// function injectContentScript(tabId) {
+//     chrome.scripting.executeScript({
+//         target: { tabId: tabId },
+//         files: ['scripts/content.js']
+//     }, () => {
+//         console.log("Content script injected successfully");
+//     });
+// }
 
 // Message listener for offscreen task
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
