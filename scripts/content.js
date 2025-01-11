@@ -27,17 +27,17 @@ function checkForVideoElement() {
         if (!video.hasAttribute('data-checked')) {
             video.setAttribute('data-checked', 'true');
             // add event listener to the video element to check if the video is at the beginning
-            video.addEventListener('timeupdate', function () {
-                if (isInjectTudum(video)) {
+            video.addEventListener('timeupdate', async function () {
+                if (await isInjectTudum(video)) {
                     injectTudum(video)
                 }
             });
         return true;
         }
         // check if the video is at the beginning once independently of the event listener
-        if (isInjectTudum(video)) {
-            injectTudum(video)
-        }
+        // if (isInjectTudum(video)) {
+        //     injectTudum(video)
+        // }
     return false;
     }
 }
@@ -55,15 +55,15 @@ function isMainVideo(video) {
 // set tudumPlayed to true and then back to false after 3 seconds
 async function toggleTudumPlayed() {
     tudumPlayed = true;
-    await setTimeout(() => {
-        tudumPlayed = false;
-    }, 3000);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    tudumPlayed = false;
 }
 
 // inject the custom tudum if the video is the main video and at the beginning and the sound has not been played yet and the OriginalFlix API returns true
-function isInjectTudum(video) {
+async function isInjectTudum(video) {
     if (isVideoBeginning(video)) {
-        return isMainVideo(video) && isOriginal() && !tudumPlayed
+        const videoIsOriginal = await isOriginal()
+        return isMainVideo(video) && videoIsOriginal && !tudumPlayed
     }
 
     return false
@@ -79,22 +79,32 @@ function injectTudum(video) {
 // mute video for 5 seconds
 async function muteVideo(video) {
     video.muted = true;
-    await setTimeout(() => {
-        video.muted = false;
-    }, 5000);
+    await new Promise((resolve) => setTimeout(resolve, 5000)) // Proper async delay
+    video.muted = false;
 }
 
-function isOriginal() {
+async function isOriginal() {
     const title = getTitle()
-    const isTitleOriginal = fetchOringinalFlix(title)
+    if (!title) {
+        console.warn("Title not found.")
+        return false
+    }
+    const isTitleOriginal = await fetchOriginalFlix(title)
     return isTitleOriginal
 }
 
-async function fetchOringinalFlix(title) {
-    const response = await fetch(`https://api.originalflix.dev/is-original?title=${encodeURIComponent(title)}&service=Netflix`)
-    const data = await response.json();
-
-    return data.exists
+async function fetchOriginalFlix(title) {
+    try {
+        const response = await fetch(
+            `https://api.originalflix.dev/is-original?title=${encodeURIComponent(title)}&service=Netflix`
+        );
+        const data = await response.json();
+        console.log("Data exists? ", data.exists);
+        return data.exists;
+    } catch (error) {
+        console.error("Error fetching from API: ", error);
+        return false;
+    }
 }
 
 function getTitle() {
@@ -116,5 +126,6 @@ function getTitle() {
         title = title.slice(0, -1).trim();
     }
     
+    console.log("title received: ", title)
     return title;
 }
