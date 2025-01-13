@@ -1,157 +1,217 @@
+:root {
+    --black: #292524;
+    --white: #FAFAF9;
+    --white-hover: #c5c5c5;
+    --red: #E44149;
+    --red-hover: #ac2d33;
+    --green: #28db72;
+    --grey: #999;
+    --disable: #555;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    padding: 0 20px 20px 20px;
-    background-color: #141414;
-    color: #E5E5E5;
+    font-family: "Poppins", sans-serif;
+    width: 380px;
+    padding: 0px 20px 20px 20px;
+    font-size: 1rem;
+    background-color: var(--black);
+    color: var(--white);
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 {
-    color: #E50914;
-    margin-bottom: 15px;
+    margin-top: 0.75rem;
     text-align: center;
+    font-size: 1.75rem;
+    font-weight: 400;
+
+}
+
+h1 span {
+    font-family: "Playwrite US Trad", serif;
+    color: #E44149;
 }
 
 label {
     display: block;
     margin-bottom: 10px;
-    font-size: 1rem;
     text-align: center;
-}
-
-input[type="file"] {
-    display: block;
-    margin-bottom: 10px;
-    margin-right: auto;
-    margin-left: auto;
-    border: solid 1px #AAA;
-    border-radius: 10px;
-    padding: 5px;
 }
 
 #change-sound {
-    text-align: center;
-    border: 2px solid #AAA;
-    padding: 15px;
-    border-radius: 15px;
     display: flex;
     flex-direction: column;
-    min-width: 300px;
+    align-items: start;
+    justify-content: center;
 }
 
 #saveButton {
-    background-color: #E50914;
-    color: #ffffff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 6px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 #saveButton:disabled {
-    background-color: #555;
+    background-color: var(--disable);
+    color: #AAA;
     cursor: not-allowed;
 }
 
-#saveButton:not(:disabled):hover {
-    background-color: #ac070f;
-}
-
 #confirmation {
-    color: #00C853;
+    color: var(--green);
     margin-top: 10px;
     display: none;
 }
 
 #error-long, #error-invalid {
-    color: #FF5252;
+    color: var(--red);
     margin-top: 10px;
     display: none;
 }
 
-.slidecontainer {
-    margin-top: 20px;
-    width: 100%;
-    align-items: center;
+.material-symbols-outlined {
+    scale: 0.85;
+    display: inline;
 }
 
-#volume-value {
-    font-size: 0.85rem;
+p {
+    margin-top: 4px;
+    font-size: 0.7rem;
+    color: var(--white-hover);
+}
+
+.input-div {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.volume {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 
 .slider {
-    width: 90%;
+    width: 80%;
     margin-left: 5px;
     -webkit-appearance: none;
     appearance: none;
     height: 10px;
-    background: #555;
+    background: #999;
     outline: none;
-    opacity: 0.7;
     border-radius: 5px;
-    transition: opacity 0.2s;
 }
 
 .slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #E50914;
+    width: 10px;
+    height: 10px;
+    background: white;
     cursor: pointer;
     border-radius: 50%;
 }
 
 .slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: #E50914;
+    width: 10px;
+    height: 10px;
+    background: white;
     cursor: pointer;
     border-radius: 50%;
 }
 
-#current-sound {
-    font-size: 1.2rem;
-    text-align: center;
+#current-sound-label {
+    display: block;
+}
+
+#current-sound-info {
+    margin-left: 12px;
+}
+
+#current-tudum-label {
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.card {
+    background: rgb(106, 103, 103);
+    background: linear-gradient(135deg, rgb(131, 128, 128) 0%, rgb(48, 46, 46) 100%);
+    box-sizing: border-box;
+    width: 100%;
     margin-bottom: 20px;
+    border-radius: 1.25rem;
+    padding: 16px;
     display: flex;
+    box-shadow: 0px 0px 8px 2px rgb(20, 20, 20);
+    transition: scale 400ms ease-in-out, box-shadow 400ms ease-in-out;
+}
+
+.card:hover {
+    scale: 1.01;
+    box-shadow: 0px 0px 11px 4px rgb(20, 20, 20);
+}
+
+#current-sound {
+    flex-direction: row;
+    padding: 12px;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 }
 
 #contact-me {
     margin-top: 20px;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+.button {
+    background-color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-size: 1rem;
     text-align: center;
-    font-size: 0.85rem;
+    width: fit-content;
+    transition: scale 200ms ease-in-out, background-color 200ms ease-in-out;
+    border: none;
+    box-shadow: 0px 0px 5px 1px rgb(60, 60, 60);
+}
+
+.button:not(:disabled):hover {
+    scale: 0.98;
 }
 
 #contact-me a {
-    color: #E50914;
+    color: var(--black);
     text-decoration: none;
 }
 
-#contact-me a:hover {
-    text-decoration: underline;
-}
-
 #testAudioButton {
-    background-color: #E50914;
-    width: 26px;
-    height: 26px;
-    color: #FFF;
+    background-color: var(--red);
+    width: 3rem;
+    font-size: 1.25rem;
+    height: 3rem;
+    color: var(--white);
     border-radius: 50%;
     border: none;
     cursor: pointer;
-    margin-left: 10px;
     padding-right: 4px;
+    transition: background-color 200ms ease-in-out;
 }
 
 #testAudioButton:disabled {
-    background-color: #555;
+    background-color: var(--disable);
     cursor: not-allowed;
 }
 
 #testAudioButton:not(:disabled):hover {
-    background-color: #ac070f;
+    background-color: var(--red-hover);
 }
