@@ -142,7 +142,7 @@ p {
 
 .card {
     background: rgb(106, 103, 103);
-    background: linear-gradient(135deg, rgb(131, 128, 128) 0%, rgb(48, 46, 46) 100%);
+    background: linear-gradient(120deg, rgb(131, 128, 128) 0%, rgb(48, 46, 46) 100%);
     box-sizing: border-box;
     width: 100%;
     margin-bottom: 20px;
