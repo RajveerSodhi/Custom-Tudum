@@ -1,34 +1,3 @@
-// // Re-inject content scripts on extension install/update
-// chrome.runtime.onInstalled.addListener(async () => {
-//     const contentScripts = chrome.runtime.getManifest().content_scripts;
-//     for (const cs of contentScripts) {
-//         const tabs = await chrome.tabs.query({ url: cs.matches });
-//         for (const tab of tabs) {
-//             chrome.scripting.executeScript({
-//                 target: { tabId: tab.id, allFrames: cs.all_frames },
-//                 files: cs.js,
-//                 injectImmediately: cs.run_at === 'document_start',
-//             });
-//         }
-//     }
-// });
-
-// // Tab update listener
-// chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
-//     if (info.status === "complete" && tab.url.indexOf("netflix.com/watch/") !== -1) {
-//         injectContentScript(tabId);
-//     }
-// });
-
-// function injectContentScript(tabId) {
-//     chrome.scripting.executeScript({
-//         target: { tabId: tabId },
-//         files: ['scripts/content.js']
-//     }, () => {
-//         console.log("Content script injected successfully");
-//     });
-// }
-
 // Message listener for offscreen task
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message === "runOffscreenTask") {
@@ -44,6 +13,7 @@ async function offScreenTask() {
     return true;
 }
 
+// retrieve volume settings
 async function getVolume() {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get("TudumVolume", function (result) {
@@ -59,6 +29,7 @@ async function getVolume() {
     });
 }
 
+// create offscreen doc
 async function setupOffscreenDocument() {
     try {
         await chrome.offscreen.createDocument({
@@ -72,6 +43,7 @@ async function setupOffscreenDocument() {
     }
 }
 
+// get saved audio file
 async function getTudum() {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get("Tudum", function (result) {

@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         if (result.TudumVolume) {
             document.getElementById("myRange").value = result.TudumVolume;
-            document.getElementById("volume-value").textContent = result.TudumVolume;
         }
     });
 });
@@ -49,7 +48,6 @@ document.getElementById("saveButton").addEventListener("click", function() {
 
 document.getElementById("myRange").addEventListener("input", function(event) {
     const volume = event.target.value;
-    document.getElementById("volume-value").textContent = volume;
     chrome.storage.local.set({ TudumVolume: volume });
 });
 

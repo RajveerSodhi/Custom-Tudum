@@ -89,7 +89,29 @@ async function isOriginal() {
         console.warn("Title not found.")
         return false
     }
+
+    // get from cache first
+    const cache = await getOriginalCache();
+    console.log("cache retrieved")
+    console.log(cache)
+    if (title in cache) {
+        console.log(`Title ${title} found in cache: ${cache[title]}`)
+        return cache[title]
+    }
+
+    // else call API
     const isTitleOriginal = await fetchOriginalFlix(title)
+    // store in cache
+    cache[title] = isTitleOriginal;
+    const cache_max_size = 50;
+    const keys = Object.keys(cache);
+    if (keys.length > cache_max_size) {
+        delete cache[keys[0]];
+    }
+
+    // Save back to chrome.storage.local
+    await setOriginalCache(cache);
+
     return isTitleOriginal
 }
 
@@ -128,4 +150,20 @@ function getTitle() {
     
     console.log("title received: ", title)
     return title;
+}
+
+async function getOriginalCache() {
+    return new Promise((resolve) => {
+        chrome.storage.local.get(["originalCache"], (result) => {
+            resolve(result.originalCache || {});
+        });
+    });
+}
+
+async function setOriginalCache(cache) {
+    return new Promise((resolve) => {
+        chrome.storage.local.set({ originalCache: cache }, () => {
+            resolve();
+        });
+    });
 }

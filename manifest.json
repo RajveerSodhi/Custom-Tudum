@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Custom Tudum",
     "description": "Customize your Netflix experience with Custom Tudum! Replace the Netflix tudum with your own sound.",
-    "version": "1.2.0",
+    "version": "1.2.2",
     "action": {
         "default_popup": "templates/popup.html",
         "default_icon": "images/logo.png"
