@@ -118,7 +118,7 @@ async function isOriginal() {
 async function fetchOriginalFlix(title) {
     try {
         const response = await fetch(
-            `https://api.originalflix.dev/is-original?title=${encodeURIComponent(title)}&service=Netflix`
+            `https://api.originalflix.rajveersodhi.com/is-original?title=${encodeURIComponent(title)}&service=Netflix`
         );
         const data = await response.json();
         console.log("Data exists? ", data.exists);

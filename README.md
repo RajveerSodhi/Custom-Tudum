@@ -1,3 +1,3 @@
 Make your Netflix viewing experience uniquely yours with the Custom Tudum extension! Tired of hearing the same "Tudum" sound every time you start a Netflix Original? This extension allows you to personalize your Netflix startup sound with a 5-second audio clip of your choice. Whether you want to hear a snippet of your favorite song, a funny sound byte, or a custom jingle, Custom Tudum lets you set the mood before your binge-watching session begins. Enjoy a more personalized and engaging Netflix experience every time you press play!
 
-Uses the [OriginalFix.dev API](https://www.originalflix.dev) to retrieve information about the content playing and decide whether or not it is a Netflix Original.
+Uses the [OriginalFix API](https://www.originalflix.rajveersodhi.com) to retrieve information about the content playing and decide whether or not it is a Netflix Original.
